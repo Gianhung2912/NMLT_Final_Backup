@@ -66,6 +66,46 @@ void SapXepNTo(int a[], int n)
     }
 }
 
+void TimSoNtoXuatHienNhieuLanNhat(int a[], int n)
+{
+    int nto[100];
+    int count = 0;
+    for (int i = 0; i < n; i++) 
+    {
+        if (KiemTraNTo(a[i]) == 1) 
+        {
+            nto[count++] = a[i];
+        }
+    }
+
+    if (count == 0)
+    {
+        cout << 0 << "\n";
+        return;
+    }
+
+    int max_count = 1, res = nto[0], curr_count = 1;
+    for (int i = 1; i < count; i++) {
+        if (nto[i] == nto[i - 1])
+            curr_count++;
+        else {
+            if (curr_count > max_count) {
+                max_count = curr_count;
+                res = nto[i - 1];
+            }
+            curr_count = 1;
+        }
+    }
+
+    if (curr_count > max_count)
+    {
+        max_count = curr_count;
+        res = nto[n - 1];
+    }
+
+    cout << res << " " << max_count << "\n";
+}
+
 
 int main()
 {
@@ -82,10 +122,10 @@ int main()
 
         // Cau b
         SapXepNTo(a, n);
-        cout << "Mang sau khi sap xep so nguyen to tang dan: ";
         XuatMang(a, n);
-
-
+        
+        // Cau c
+        TimSoNtoXuatHienNhieuLanNhat(a, n);
 
         cout << "Nhan phim ESC de thoat...\n";
     } while (_getch() != 27);
